@@ -7,12 +7,11 @@ class LanguageModel(AbstractModel):
     _collection = db["languages"]
 
     def __init__(self, dict):
-        # {"name": "afrikaans", "acronym": "af"}
         super().__init__(dict)
 
     # Req. 2
     def to_dict(self):
-        raise NotImplementedError
+        return {"name": self.data["name"], "acronym": self.data["acronym"]}
 
     # Req. 3
     @classmethod
