@@ -22,7 +22,7 @@
             <select name="translate-from">
               {% for language in languages %}
 
-                {% if translate_from['acronym'] == language['acronym'] %}
+                {% if translate_from == language['acronym'] %}
                   <option value="{{language['acronym']}}" selected>{{language['name']|upper}}</option>
                 {% else %}
                   <option value="{{language['acronym']}}">{{language['name']|upper}}</option>
@@ -40,7 +40,7 @@
             <select name="translate-to">
               {% for language in languages %}
 
-                {% if translate_to['acronym'] == language['acronym'] %}
+                {% if translate_to == language['acronym'] %}
                   <option value="{{language['acronym']}}" selected>{{language['name']|upper}}</option>
                 {% else %}
                   <option value="{{language['acronym']}}">{{language['name']|upper}}</option>
@@ -54,10 +54,10 @@
     </div>
     <button class="main-button" type="submit" formaction="/">Traduzir</button>
     </form>
-    <!-- <h1>translate_from: {{translate_from}}</h1>
+    <h1>translate_from: {{translate_from}}</h1>
     <h1>translate_to: {{translate_to}}</h1>
     <h1>translated: {{translated}}</h1>
-    <h1>text_to_translate: {{text_to_translate}}</h1> -->
+    <h1>text_to_translate: {{text_to_translate}}</h1>
   </div>
 </body>
 
