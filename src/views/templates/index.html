@@ -1,4 +1,5 @@
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>Traduzo - Trybe</title>
@@ -7,29 +8,57 @@
 
 <body>
   <div class="container">
-      <img src="{{ url_for('static', filename='images/logo.png') }}" class="header">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" class="header">
     <div class="wrapper">
       <form method="post">
         <div class="text-input">
-          <textarea name="text-to-translate" spellcheck="false" class="from-text" placeholder="O que deseja traduzir"></textarea>
-          <textarea spellcheck="false" readonly disabled class="to-text">Requisito ainda não desenvolvido</textarea>
+          <textarea name="text-to-translate" spellcheck="false" class="from-text"
+            placeholder="O que deseja traduzir"></textarea>
+          <textarea spellcheck="false" readonly disabled class="to-text" placeholder="Tradução">{{translated}}</textarea>
         </div>
         <ul class="controls">
           <li class="row from">
+            <!-- req04 -->
             <select name="translate-from">
+              {% for language in languages %}
+
+                {% if translate_from['acronym'] == language['acronym'] %}
+                  <option value="{{language['acronym']}}" selected>{{language['name']|upper}}</option>
+                {% else %}
+                  <option value="{{language['acronym']}}">{{language['name']|upper}}</option>
+                {% endif %}
+
+              {% endfor %}
             </select>
+            <!-- req04 -->
           </li>
           <div>
             <button class="tool" type="submit" formaction="/reverse">🔁</button>
           </div>
           <li class="row to">
+            <!-- req04 -->
             <select name="translate-to">
+              {% for language in languages %}
+
+                {% if translate_to['acronym'] == language['acronym'] %}
+                  <option value="{{language['acronym']}}" selected>{{language['name']|upper}}</option>
+                {% else %}
+                  <option value="{{language['acronym']}}">{{language['name']|upper}}</option>
+                {% endif %}
+
+              {% endfor %}
             </select>
+            <!-- req04 -->
           </li>
         </ul>
-      </div>
-      <button class="main-button" type="submit" formaction="/">Traduzir</button>
+    </div>
+    <button class="main-button" type="submit" formaction="/">Traduzir</button>
     </form>
+    <!-- <h1>translate_from: {{translate_from}}</h1>
+    <h1>translate_to: {{translate_to}}</h1>
+    <h1>translated: {{translated}}</h1>
+    <h1>text_to_translate: {{text_to_translate}}</h1> -->
   </div>
 </body>
+
 </html>
