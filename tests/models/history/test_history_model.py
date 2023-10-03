@@ -1,4 +1,3 @@
-import json
 from src.models.history_model import HistoryModel
 
 mock1 = {
