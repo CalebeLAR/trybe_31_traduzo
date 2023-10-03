@@ -3,14 +3,13 @@ from models.language_model import LanguageModel
 
 from deep_translator import GoogleTranslator
 
-# from models.history_model import HistoryModel
-
+from models.history_model import HistoryModel
 
 translate_controller = Blueprint("translate_controller", __name__)
 
 
 # utilitários
-def set_value_by_tag_name(default_value, name_tag):
+def get_value_by_tag_name(default_value, name_tag):
     if request.method == "GET":
         return default_value
     else:
@@ -21,17 +20,23 @@ def set_value_by_tag_name(default_value, name_tag):
 @translate_controller.route("/", methods=["GET", "POST"])
 def index():
     languages = LanguageModel.list_dicts()
-    translate_from = set_value_by_tag_name("pt", "translate-from")
-    translate_to = set_value_by_tag_name("en", "translate-to")
-    text_to_translate = set_value_by_tag_name("", "text-to-translate")
+    translate_from = get_value_by_tag_name("pt", "translate-from")
+    translate_to = get_value_by_tag_name("en", "translate-to")
+    text_to_translate = get_value_by_tag_name("", "text-to-translate")
 
-    translated = (
-        ""
-        if request.method == "GET"
-        else GoogleTranslator(
+    translated = ""
+    if request.method == "POST":
+        translated = GoogleTranslator(
             source=translate_from, target=translate_to
         ).translate(text=text_to_translate)
-    )
+
+        HistoryModel(
+            {
+                "text_to_translate": text_to_translate,
+                "translate_from": translate_from,
+                "translate_to": translate_to,
+            }
+        ).save()
 
     return render_template(
         "index.html",
